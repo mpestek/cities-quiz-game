@@ -22,7 +22,7 @@
   </ion-item>
 </ion-item-group>
 <ion-item-group class="highscore" *ngIf="game.hasEnded()">
-  <ion-item>Highscore:</ion-item>
+  <ion-item>Highscore</ion-item>
   <ion-item *ngFor="let score of game.getHighscores()">
     <ion-text>City: {{ score.city.name }}, Error: {{ score.distance }} km.</ion-text>
   </ion-item>

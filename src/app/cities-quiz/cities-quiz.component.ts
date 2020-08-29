@@ -21,6 +21,7 @@ export class CitiesQuizComponent implements AfterViewInit, OnInit {
   private game: CitiesQuizGame;
   private currentGuessMarker: google.maps.Marker;
   private inTransition = false;
+  private newGameTransition = false;
 
   constructor(
     private capitalCitiesService: CapitalCitiesService
@@ -35,6 +36,7 @@ export class CitiesQuizComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.initMap();
+    this.showAllCitiesBriefly();
   }
 
   initMap() {
@@ -73,6 +75,15 @@ export class CitiesQuizComponent implements AfterViewInit, OnInit {
     }));
   }
 
+  showAllCitiesBriefly() {
+    this.placedCitiesMarkers.forEach(marker => marker.setVisible(true));
+    this.newGameTransition = true;
+    setTimeout(() => {
+      this.placedCitiesMarkers.forEach(marker => marker.setVisible(false));
+      this.newGameTransition = false
+    }, 2000);
+  }
+
   onMapClicked = (clickEvent: google.maps.MouseEvent) => {
     if (this.inTransition) {
       return;
@@ -100,6 +111,10 @@ export class CitiesQuizComponent implements AfterViewInit, OnInit {
 
     const guessPosition = this.currentGuessMarker.getPosition();
     this.game.guess({ lat: guessPosition.lat(), lng: guessPosition.lng() });
+
+    if (this.game.hasEnded()) {
+      this.inTransition = false;
+    }
   }
 
   showPinOfCityToBeGuessed(cityName: string) {
@@ -120,6 +135,7 @@ export class CitiesQuizComponent implements AfterViewInit, OnInit {
 
   startNewGame() {
     this.game.init();
+    this.showAllCitiesBriefly();
   }
 
   resetMapPosition() {
