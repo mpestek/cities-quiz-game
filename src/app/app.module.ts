@@ -10,15 +10,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CapitalCitiesService } from './services/capital-cities.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { CitiesQuizComponent } from './cities-quiz/cities-quiz.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    CitiesQuizComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [
     StatusBar,
@@ -30,7 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
       useFactory: (captialCitiesService: CapitalCitiesService) => () => captialCitiesService.load(),
       deps: [CapitalCitiesService],
       multi: true
-    },
+    } 
   ],
   bootstrap: [AppComponent]
 })

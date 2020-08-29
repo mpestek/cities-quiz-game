@@ -12,6 +12,7 @@ export class CitiesQuizGame {
   private cityToBeGuessed: CapitalCity;
   private citiesLeftForGuessing: CapitalCity[];
   private correctlyGuessedCities: GuessedCity[];
+  private wasLastGuessCorrect: boolean;
 
   constructor(
     cities: CapitalCity[]
@@ -39,6 +40,9 @@ export class CitiesQuizGame {
         distance
       });
       this.removeCorrectlyGuessedCityFromCitiesLeft();
+      this.wasLastGuessCorrect = true;
+    } else {
+      this.wasLastGuessCorrect = false;
     }
 
     this.currentPoints -= distance;
@@ -53,6 +57,18 @@ export class CitiesQuizGame {
   public getHighscores(): GuessedCity[] {
     this.correctlyGuessedCities.sort((cityA, cityB) => cityA.distance < cityB.distance ? -1 : 1);
     return this.correctlyGuessedCities;
+  }
+
+  public getRemainingKilometers() {
+    return this.currentPoints;
+  }
+
+  public getCityToBeGuessed(): CapitalCity {
+    return this.cityToBeGuessed;
+  }
+
+  public getWasLastGuessCorrect() {
+    return this.wasLastGuessCorrect;
   }
 
   private removeCorrectlyGuessedCityFromCitiesLeft() {

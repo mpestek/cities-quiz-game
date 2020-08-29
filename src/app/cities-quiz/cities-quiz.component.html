@@ -1,2 +1,35 @@
-<div #map id="map"></div>
-<ion-button (click)="resetMapPosition()">Reset position</ion-button>
+<ion-item-group *ngIf="game.hasEnded()">
+  <ion-item>GAME ENDED!</ion-item>
+  <ion-button (click)="startNewGame()">Try again!</ion-button>
+</ion-item-group>
+<ion-item-group *ngIf="!game.hasEnded()">
+  <ion-item>{{ numberOfCities }} cities placed.</ion-item>
+  <ion-item>{{ game.getRemainingKilometers() }} kilometers left.</ion-item>
+  <ion-item>
+    <ion-text>Guess where  <ion-text color="danger">{{ game.getCityToBeGuessed().name }}</ion-text>  is!</ion-text>
+  </ion-item>
+</ion-item-group>
+<ion-item-group *ngIf="inTransition">
+  <ion-item 
+    *ngIf="game.getWasLastGuessCorrect()"
+    class="correct">
+    <ion-text>CORRECT!</ion-text>
+  </ion-item>
+  <ion-item 
+    *ngIf="!game.getWasLastGuessCorrect()"
+    class="wrong">
+    <ion-text>WRONG!</ion-text>
+  </ion-item>
+</ion-item-group>
+<ion-item-group class="highscore" *ngIf="game.hasEnded()">
+  <ion-item>Highscore:</ion-item>
+  <ion-item *ngFor="let score of game.getHighscores()">
+    <ion-text>City: {{ score.city.name }}, Error: {{ score.distance }} km.</ion-text>
+  </ion-item>
+</ion-item-group>
+<div 
+  #map 
+  id="map"
+  [ngStyle]="{ 'display': game.hasEnded() ? 'none' : 'block' }"></div>
+<ion-button (click)="placePin()">Place pin</ion-button>
+<ion-button (click)="resetMapPosition()">Reset view</ion-button>
