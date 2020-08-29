@@ -1,5 +1,6 @@
+import { LatLng } from './lat-lng.model';
+
 export interface CapitalCity {
   name: string;
-  lat: number;
-  lng: number;
+  position: LatLng;
 }

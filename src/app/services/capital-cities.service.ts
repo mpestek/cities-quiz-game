@@ -11,6 +11,9 @@ export class CapitalCitiesService {
   async load() {
     const result: any = await this.httpClient.get('assets/capitalCities.json').toPromise();
 
-    this.capitalCities = result.capitalCities as CapitalCity[];
+    this.capitalCities = result.capitalCities.map(capitalCity => ({
+      name: capitalCity.name,
+      position: { lat: capitalCity.lat, lng: capitalCity.lng }
+    }));
   }
 }

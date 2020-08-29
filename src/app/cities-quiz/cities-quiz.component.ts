@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CapitalCitiesService } from '../services/capital-cities.service';
 import { getDistanceInMeters } from '../utils/point-distance.util';
+import { CitiesQuiz, CitiesQuizGame } from '../utils/cities-quiz.game';
 
 @Component({
   selector: 'app-cities-quiz',
@@ -17,12 +18,15 @@ export class CitiesQuizComponent implements AfterViewInit {
   readonly defaultCenter = { lat: 49.14209912333384, lng: 5.644931731625218 };
   readonly defaultZoom = 4;
 
+  game: CitiesQuizGame;
+
   constructor(
     private capitalCitiesService: CapitalCitiesService
   ) {}
 
   ngAfterViewInit() {
     this.initMap();
+    console.log(this.capitalCitiesService.capitalCities)
   }
 
   initMap() {
@@ -54,7 +58,7 @@ export class CitiesQuizComponent implements AfterViewInit {
   addCapitalCitiesMarkers() {
     this.markers = this.capitalCitiesService.capitalCities.map(capitalCity => new google.maps.Marker({
       map: this.map,
-      position: { lat: capitalCity.lat, lng: capitalCity.lng },
+      position: capitalCity.position,
       title: capitalCity.name,
       label: capitalCity.name,
       visible: false
@@ -62,7 +66,9 @@ export class CitiesQuizComponent implements AfterViewInit {
   }
 
   onMapClicked = (clickEvent: google.maps.MouseEvent) => {
-    console.log(getDistanceInMeters(this.markers[0].getPosition(), clickEvent.latLng));
+    console.log(`map clicked`);
+    this.game = new CitiesQuizGame(this.capitalCitiesService.capitalCities);
+    console.log(this.game);
   }
 
   resetMapPosition() {
