@@ -1,0 +1,7 @@
+{
+  "name": "cities-quiz",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
