@@ -1,6 +1,12 @@
 # Cities quiz game
 
-Main parts of the applications: 
+The game was developed with Angular and Ionic framework over an 8 hour period.
+
+### Requirements
+
+Player sees a map of Europe without streets and cities. The goal is to guess where the cities that are shown to the user are located. After the user places the pin, the game shows the right location, as well as the difference (in km) to the actualy location of the city. If the guessed location is withing a radius (say 50km), the guess is considered correct. The player starts with a 1500km "budget". At each round, the difference between the guess and the actual locations is deducted from the initial budget, until it reaches 0. That's when the game ends and the player is showns how many cities he positioned correctly.
+
+### Main parts of the applications: 
 - The `CitiesQuizGame` class, that implements the game logic.
 - The `CitiesQuizComponent`, which acts as an interface between the game logic and the actual UI. It handles the map initialization and all other map interactions and updates the `CitiesQuizGame` instance appropriately.
 - The `CapitalCitiesService` which loads the cities and their locations as  specified in the `capitalCities.json` file.
